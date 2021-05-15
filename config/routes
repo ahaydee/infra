@@ -1,0 +1,12 @@
+/static StaticR Static appStatic
+
+/favicon.ico FaviconR GET
+/robots.txt RobotsR GET
+
+/                 HomeR         GET 
+/catalogo         CatalogoR     GET
+/categoria/#Int   CategoriaR    GET
+/requisicao/#Int  RequisicaoR   GET
+/requisicoes      RequisicoesR  GET
+/servico/#Int     ServicoR      GET
+/usuarios         UsuariosR     GET

@@ -1,0 +1,30 @@
+<main>
+    <div class="container content" style="margin-bottom: 55px">
+        <div class="row" style="margin-top: 45px; padding-left: 15px">
+            <div class="col-lg-12">
+                <h2>CATÁLOGO DE SERVIÇOS
+            <div class="col-lg-12" style="margin-top: 30px; min-height: 550px">
+                <h3>
+                    USUÁRIOS
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nome
+                            <th>
+                                Login
+                            <th>
+                                Departamento
+                            <th>
+                                Tipo
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <button class="form-control" style=" margin-right: 10px">
+                            Novo
+                    <div class="col-lg-2">
+                        <button class="form-control" style=" margin-right: 10px">
+                            Editar
+                    <div class="col-lg-2">
+                        <button class="form-control" style=" margin-right: 10px">
+                            Excluir
