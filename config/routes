@@ -4,9 +4,21 @@
 /robots.txt RobotsR GET
 
 /                 HomeR         GET 
-/catalogo         CatalogoR     GET
-/categoria/#Int   CategoriaR    GET
-/requisicao/#Int  RequisicaoR   GET
-/requisicoes      RequisicoesR  GET
-/servico/#Int     ServicoR      GET
-/usuarios         UsuariosR     GET
+
+/catalogo                       CatalogoR         GET
+/categoria                      CategoriaR        GET POST
+/categoria/#CategoriaId/apagar  ApagarCategoriaR  POST
+/servicos/#CategoriaId          ServicosR         GET
+
+/servicos/#CategoriaId/servico                    ServicoR          GET POST
+/servicos/#CategoriaId/servico/#ServicoId         ListarServicoR    GET
+/servicos/#CategoriaId/servico/#ServicoId/apagar  ApagarServicoR    POST
+
+/usuarios                   UsuariosR       GET
+/usuario                    UsuarioR        GET POST
+/usuario/#UsuarioId/apagar  ApagarUsuarioR  POST
+/usuario/#UsuarioId         ListarUsuarioR  GET
+
+/requisicao/#PedidoId                      RequisicaoR      GET
+/requisicoes                               RequisicoesR     GET
+/servico/requisicao/#UsuarioId/#ServicoId  FazerRequisicaoR  POST

@@ -3,27 +3,30 @@
         <div class="row" style="margin-top: 45px; padding-left: 15px">
             <div class="col-lg-12">
                 <h2>CATÁLOGO DE SERVIÇOS
-            <div class="col-lg-12" style="margin-top: 30px; min-height: 550px">
+            <div class="col-lg-12" style="margin-top: 30px">
                 <h3>
-                    REQUISIÇÃO
+                    Usuário
                 <br>
                 <p>
                     <strong>
-                        Data: #{pedidoData pedido}
+                        Nome: 
+                    #{usuarioNome usuario}
                 <p>
                     <strong>
-                        Situação:
+                        Email: 
+                    #{usuarioEmail usuario}
                 <p>
                     <strong>
-                        Usuário:
+                        Departamento: 
                 <p>
                     <strong>
-                        Departamento:
+                        Tipo: 
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-2">
                         <button class="form-control" style=" margin-right: 10px">
-                            Aprovar
+                            Editar
                     <div class="col-lg-2">
-                        <button class="form-control" style=" margin-right: 10px">
-                            Rejeitar
+                        <form method=post action=@{ApagarUsuarioR uid}>
+                            <button class="form-control" style=" margin-right: 10px">
+                                Excluir
