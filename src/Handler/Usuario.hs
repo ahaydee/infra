@@ -24,29 +24,24 @@ menu rs cl = [whamlet|
                             #{nome}
         |]
 
---categorys = do
---       entidades <- runDB $ selectList [] [Asc CategoriaNome] 
---       optionsPairs $ fmap (\ent -> (categoriaNome $ entityVal ent, entityKey ent)) entidades
-
-{-formUsuario :: Form Usuario
+formUsuario :: Form Usuario
 formUsuario = renderDivs $ Usuario 
     <$> areq textField  (FieldSettings "Nome: " Nothing (Just "nome") Nothing [("class", "form-control")]) Nothing
     <*> areq textField  (FieldSettings "Email: " Nothing (Just "email") Nothing [("class", "form-control")]) Nothing
-    <*> areq passwordConfirmField   (FieldSettings "Senha: " Nothing (Just "senha") Nothing [("class", "form-control")]) Nothing
-    <*> areq (selectFieldList tipo) "Tipo" Nothing
-    <*> areq (selectFieldList departamento) "Departamento" Nothing
+    <*> areq passwordField   (FieldSettings "Senha: " Nothing (Just "senha") Nothing [("class", "form-control")]) Nothing
+    <*> areq (selectField departamento) (FieldSettings "Departamento: " Nothing (Just "departamento") Nothing [("class", "form-select")]) Nothing
+    <*> areq (selectField tipo) (FieldSettings "Tipo: " Nothing (Just "tipo") Nothing [("class", "form-select")]) Nothing
       where
         tipo = do
            entidades <- runDB $ selectList [] [Asc TipoUsuarioNome] 
-           map (\(Entity cid cat) -> (tipoUsuarioNome cat, cid)) entidades
+           optionsPairs $ map (\(Entity cid cat) -> (tipoUsuarioNome cat, cid)) entidades
         departamento = do
            entidades <- runDB $ selectList [] [Asc DepartamentoNome] 
-           map (\(Entity cid cat) -> (departamentoNome cat, cid)) entidades-}
+           optionsPairs $ map (\(Entity cid cat) -> (departamentoNome cat, cid)) entidades
 
 getUsuarioR :: Handler Html
 getUsuarioR = do
-    {-(widget, _) <- generateFormPost formUsuario-}
-                                        {-^{widget}-}
+    (widget, _) <- generateFormPost formUsuario
     msg <- getMessage -- Handler (Maybe Text)
     defaultLayout $ do
         toWidgetHead $(juliusFile "templates/home.julius")
@@ -90,9 +85,10 @@ getUsuarioR = do
                                     ^{mensa}
 
                         <div class="col-lg-12">
-                            <form action=@{UsuarioR} method=get>
+                            <form action=@{UsuarioR} method=post>
                                 <div class="row">
                                     <div class="col-lg-4">
+                                        ^{widget}
 
                                 <div class="col-lg-12">
                                     <div class="row">
@@ -104,7 +100,7 @@ getUsuarioR = do
 
 postUsuarioR :: Handler Html
 postUsuarioR = do
-    {-((result, _), _) <- runFormPost formUsuario
+    ((result, _), _) <- runFormPost formUsuario
     case result of 
         FormSuccess usuario -> do
             runDB $ insert usuario
@@ -113,8 +109,7 @@ postUsuarioR = do
                         Usuário inserido com sucesso
             |]
             redirect $ UsuarioR
-        _ -> redirect HomeR-}
-    redirect $ UsuarioR
+        _ -> redirect HomeR
 
 postApagarUsuarioR :: UsuarioId -> Handler Html
 postApagarUsuarioR id = do

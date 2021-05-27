@@ -44,3 +44,8 @@ main {
 .mr-auto {
 	margin-right: auto;
 }
+
+.form-select {
+    padding: .375rem .75rem .375rem .75rem;
+    background-position: right .75rem center;
+}

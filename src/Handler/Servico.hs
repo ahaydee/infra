@@ -26,24 +26,19 @@ menu rs cl = [whamlet|
                             #{nome}
         |]
 
---categorys = do
---       entidades <- runDB $ selectList [] [Asc CategoriaNome] 
---       optionsPairs $ fmap (\ent -> (categoriaNome $ entityVal ent, entityKey ent)) entidades
-
-{-formServico :: Form Servico
+formServico :: Form Servico
 formServico = renderDivs $ Servico 
     <$> areq textField  (FieldSettings "Nome: " Nothing (Just "nome") Nothing [("class", "form-control")]) Nothing
     <*> areq textareaField  (FieldSettings "Descrição: " Nothing (Just "descricao") Nothing [("class", "form-control")]) Nothing
-    <*> areq (selectFieldList cats) "Categoria" Nothing
+    <*> areq (selectField cats) (FieldSettings "Categoria: " Nothing (Just "categoria") Nothing [("class", "form-select")]) Nothing
       where
         cats = do
            entidades <- runDB $ selectList [] [Asc CategoriaNome] 
-           map (\(Entity cid cat) -> (categoriaNome cat, cid)) entidades-}
+           optionsPairs $ map (\(Entity cid cat) -> (categoriaNome cat, cid)) entidades
 
 getServicoR :: CategoriaId -> Handler Html
 getServicoR cid = do
-    {-(widget, _) <- generateFormPost formServico-}
-                                        {-^{widget}-}
+    (widget, _) <- generateFormPost formServico
     msg <- getMessage -- Handler (Maybe Text)
     defaultLayout $ do
         toWidgetHead $(juliusFile "templates/home.julius")
@@ -87,9 +82,10 @@ getServicoR cid = do
                                     ^{mensa}
 
                         <div class="col-lg-12">
-                            <form action=@{ServicoR cid} method=get>
+                            <form action=@{ServicoR cid} method=post>
                                 <div class="row">
                                     <div class="col-lg-4">
+                                        ^{widget}
 
                                 <div class="col-lg-12">
                                     <div class="row">
@@ -101,7 +97,7 @@ getServicoR cid = do
 
 postServicoR :: CategoriaId -> Handler Html
 postServicoR cid = do
-    {-((result, _), _) <- runFormPost formServico
+    ((result, _), _) <- runFormPost formServico
     case result of 
         FormSuccess servico -> do
             runDB $ insert servico
@@ -110,8 +106,7 @@ postServicoR cid = do
                         Serviço inserido com sucesso
             |]
             redirect $ ServicoR cid
-        _ -> redirect HomeR-}
-    redirect $ ServicoR cid
+        _ -> redirect HomeR
 
 postApagarServicoR :: CategoriaId -> ServicoId -> Handler Html
 postApagarServicoR cid id = do
