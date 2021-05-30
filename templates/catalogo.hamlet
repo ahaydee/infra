@@ -3,31 +3,40 @@
         <div class="row" style="margin-top: 45px; padding-left: 15px">
             <div class="col-lg-12">
                 <h2>CATÁLOGO DE SERVIÇOS
-            <div class="col-lg-12" style="margin-top: 30px">
-                <h3>
-                    CATEGORIAS
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>
-                                Nome
-                            <th>
-
-                    <tbody>
-                        $forall Entity cid cat <- categorias
+            $maybe email <- logged
+                <div class="col-lg-12" style="margin-top: 30px">
+                    <h3>
+                        CATEGORIAS
+                    <table class="table table-responsive">
+                        <thead>
                             <tr>
-                                <td>
-                                    <a href=@{ServicosR cid}>
-                                        #{categoriaNome cat}
-                                <td>
-                                    <form method=post action=@{ApagarCategoriaR cid}>
-                                        <button class="form-control" style="width:40px; margin-left:auto;">
-                                            <i class="fas fa-trash">
+                                <th>
+                                    Nome
+                                $if (email == "admin")
+                                    <th>
+
+                                    <th>
+                        <tbody>
+                            $forall Entity cid cat <- categorias
+                                <tr>
+                                    <td>
+                                        <a href=@{ServicosR cid}>
+                                            #{categoriaNome cat}
+                                    $if (email == "admin")
+                                        <td>
+                                            <form method=get action=@{EditarCategoriaR cid}>
+                                                <button class="form-control" style="width:40px; margin-left:auto;">
+                                                    <i class="fas fa-edit">
+                                        <td>
+                                            <form method=post action=@{ApagarCategoriaR cid}>
+                                                <button class="form-control" style="width:40px; margin-left:auto;">
+                                                    <i class="fas fa-trash">
 
 
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <form method=get action=@{CategoriaR}>
-                            <button class="form-control" style=" margin-right: 10px">
-                                Novo
+                $if (email == "admin")
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <form method=get action=@{CategoriaR}>
+                                    <button class="form-control" style=" margin-right: 10px">
+                                        Novo

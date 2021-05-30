@@ -1,6 +1,3 @@
-TipoUsuario
-    nome Text
- 
 Departamento
     nome Text
 
@@ -11,24 +8,20 @@ Categoria
     nome Text
     
 Servico
+    cid CategoriaId
     nome Text
     descricao Textarea
-    cid CategoriaId
 
 Usuario
     nome Text
     email Text
     senha Text
     did DepartamentoId
-    tuid TipoUsuarioId
+    UniqueEmail email
+    deriving Show
  
 Pedido
     data Text
     uid UsuarioId
     sid ServicoId
-
-SituacaoPedido
-    descricao Textarea
-    data Text
-    pid PedidoId
-    sid SituacaoId
+    stid SituacaoId

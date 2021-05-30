@@ -3,6 +3,12 @@
         <div class="row" style="margin-top: 45px; padding-left: 15px">
             <div class="col-lg-12">
                 <h2>CATÁLOGO DE SERVIÇOS
+                
+            $maybe mensa <- msg
+                <div class="col-lg-12">
+                    <p>
+                        ^{mensa}
+
             <div class="col-lg-12" style="margin-top: 30px">
                 <h3>
                     Serviço
@@ -15,15 +21,20 @@
                     <strong>
                         Descrição: 
                     #{servicoDescricao servico}
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <button class="form-control" style=" margin-right: 10px">
-                            Solicitar
-                    <div class="col-lg-2">
-                        <button class="form-control" style=" margin-right: 10px">
-                            Editar
-                    <div class="col-lg-2">
-                        <form method=post action=@{ApagarServicoR cid sid}>
-                            <button class="form-control" style=" margin-right: 10px">
-                                Excluir
+            $maybe email <- logged
+                <div class="col-lg-12">
+                    <div class="row">
+                        $if (email /= "admin")
+                            <div class="col-lg-2">
+                                <form method=post action=@{SolicitarR cid sid}>
+                                    <button class="form-control" style=" margin-right: 10px">
+                                        Solicitar
+                        $if (email == "admin")
+                            <div class="col-lg-2">
+                                <form method=get action=@{EditarServicoR cid sid}>
+                                    <button class="form-control" style=" margin-right: 10px">
+                                        Editar
+                            <div class="col-lg-2">
+                                <form method=post action=@{ApagarServicoR cid sid}>
+                                    <button class="form-control" style=" margin-right: 10px">
+                                        Excluir

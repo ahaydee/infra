@@ -16,10 +16,9 @@
                             <th>
                                 Departamento
                             <th>
-                                Tipo
                             <th>
                     <tbody>
-                        $forall Entity uid usu <- usuarios
+                        $forall (Entity uid usu, Entity _ dep) <- usuarios
                             <tr>
                                 <td>
                                     <a href=@{ListarUsuarioR uid}>
@@ -27,7 +26,11 @@
                                 <td>
                                     #{usuarioEmail usu}
                                 <td>
+                                    #{departamentoNome dep}
                                 <td>
+                                    <form method=get action=@{EditarUsuarioR uid}>
+                                        <button class="form-control" style="width:40px; margin-left:auto;">
+                                            <i class="fas fa-edit">
                                 <td>
                                     <form method=post action=@{ApagarUsuarioR uid}>
                                         <button class="form-control" style="width:40px; margin-left:auto;">
@@ -35,5 +38,6 @@
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-2">
-                        <button class="form-control" style=" margin-right: 10px">
-                            Novo
+                        <form method=get action=@{UsuarioR}>
+                            <button class="form-control" style=" margin-right: 10px">
+                                Novo

@@ -4,28 +4,31 @@
             <div class="col-lg-12">
                 <h2>CATÁLOGO DE SERVIÇOS
             <div class="col-lg-12" style="margin-top: 30px">
+                <a href=@{UsuariosR}>
+                    Voltar
+            <div class="col-lg-12" style="margin-top: 15px">
                 <h3>
                     Usuário
                 <br>
-                <p>
-                    <strong>
-                        Nome: 
-                    #{usuarioNome usuario}
-                <p>
-                    <strong>
-                        Email: 
-                    #{usuarioEmail usuario}
-                <p>
-                    <strong>
-                        Departamento: 
-                <p>
-                    <strong>
-                        Tipo: 
+                $forall (Entity rid user, Entity _ departamento) <- usuario
+                    <p>
+                        <strong>
+                            Nome: 
+                        #{usuarioNome user}
+                    <p>
+                        <strong>
+                            Email: 
+                        #{usuarioEmail user}
+                    <p>
+                        <strong>
+                            Departamento: 
+                        #{departamentoNome departamento}
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-2">
-                        <button class="form-control" style=" margin-right: 10px">
-                            Editar
+                        <form method=get action=@{EditarUsuarioR uid}>
+                            <button class="form-control" style=" margin-right: 10px">
+                                Editar
                     <div class="col-lg-2">
                         <form method=post action=@{ApagarUsuarioR uid}>
                             <button class="form-control" style=" margin-right: 10px">

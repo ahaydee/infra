@@ -5,5 +5,19 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon">
         <div class="collapse navbar-collapse" id="navbarNav">
-            ^{menu [(CatalogoR, "Catálogo de serviços"), (RequisicoesR, "Requisições"), (UsuariosR, "Usuário")] "navbar-nav mr-auto"}
-            ^{menu [(HomeR, "Sair")] "navbar-nav ml-auto"}
+            $maybe email <- logged
+                $if (email == "admin")
+                    ^{menu [(CatalogoR, "Catálogo de serviços"), (RequisicoesR, "Requisições"), (UsuariosR, "Usuário")] "navbar-nav mr-auto"}
+                $else
+                    ^{menu [(CatalogoR, "Catálogo de serviços"), (RequisicoesR, "Requisições")] "navbar-nav mr-auto"}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <p>
+                            #{email}
+                    <li class="nav-item">
+                        <form method=post action=@{SairR}>
+                            <button class="btn btn-link" style=" margin-right: 10px">
+                                Sair
+
+            $nothing 
+                ^{menu [(EntrarR, "Entrar")] "navbar-nav mr-auto"}

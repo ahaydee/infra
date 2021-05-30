@@ -3,22 +3,28 @@
 /favicon.ico FaviconR GET
 /robots.txt RobotsR GET
 
-/                 HomeR         GET 
+/         HomeR    GET
+/login    EntrarR  GET POST
+/logout   SairR    POST
 
 /catalogo                       CatalogoR         GET
 /categoria                      CategoriaR        GET POST
+/categoria/#CategoriaId/editar  EditarCategoriaR  GET POST
 /categoria/#CategoriaId/apagar  ApagarCategoriaR  POST
 /servicos/#CategoriaId          ServicosR         GET
 
-/servicos/#CategoriaId/servico                    ServicoR          GET POST
-/servicos/#CategoriaId/servico/#ServicoId         ListarServicoR    GET
-/servicos/#CategoriaId/servico/#ServicoId/apagar  ApagarServicoR    POST
+/servicos/#CategoriaId/servico                       ServicoR          GET POST
+/servicos/#CategoriaId/servico/#ServicoId            ListarServicoR    GET
+/servicos/#CategoriaId/servico/#ServicoId/editar     EditarServicoR    GET POST
+/servicos/#CategoriaId/servico/#ServicoId/apagar     ApagarServicoR    POST
+/servicos/#CategoriaId/servico/#ServicoId/solicitar  SolicitarR        POST
 
 /usuarios                   UsuariosR       GET
 /usuario                    UsuarioR        GET POST
 /usuario/#UsuarioId/apagar  ApagarUsuarioR  POST
+/usuario/#UsuarioId/editar  EditarUsuarioR  GET POST
 /usuario/#UsuarioId         ListarUsuarioR  GET
 
-/requisicao/#PedidoId                      RequisicaoR      GET
-/requisicoes                               RequisicoesR     GET
-/servico/requisicao/#UsuarioId/#ServicoId  FazerRequisicaoR  POST
+/requisicao/#PedidoId                       RequisicaoR      GET
+/requisicoes                                RequisicoesR     GET
+/servico/requisicao/#UsuarioId/#ServicoId   FazerRequisicaoR  POST

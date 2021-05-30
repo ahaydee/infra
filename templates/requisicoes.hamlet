@@ -18,11 +18,14 @@
                             <th>
                                 Situação
                     <tbody>
-                        $forall Entity rid req <- pedidos
+                        $forall (Entity rid pedido, Entity _ servico, Entity _ usuario, Entity _ situacao) <- pedidos
                             <tr>
                                 <td>
                                     <a href=@{RequisicaoR rid}>
-                                        #{pedidoData req}
+                                        #{pedidoData pedido}
                                 <td>
+                                    #{servicoNome servico}
                                 <td>
+                                    #{usuarioNome usuario}
                                 <td>
+                                    #{situacaoNome situacao}

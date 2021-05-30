@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f02de69d3328dfb5578e67d46097d8a4d18763ad616d407f0fa593a26fb7e218
+-- hash: 8930b6495c63d55006957cdf26a3c07fd5f2e2d70098469164b4497c1c6c2725
 
 name:           infra
 version:        0.0.0
@@ -24,6 +24,7 @@ library
   exposed-modules:
       Application
       Foundation
+      Handler.Auxiliar
       Handler.Categoria
       Handler.Common
       Handler.Home

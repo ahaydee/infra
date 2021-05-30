@@ -12,28 +12,18 @@ import Text.Julius
 import Text.Lucius
 import Data.Time.Clock
 import Data.Time.Calendar
-
-menu :: [(Route App, Text)] -> Text -> Widget
-menu [] cl = [whamlet|
-                <h1>
-                    ERRO
-            |]
-menu rs cl = [whamlet|
-            <ul class=#{cl}>
-                $forall (rota,nome) <- rs
-                    <li class="nav-item active">
-                        <a class="nav-link" href=@{rota}>
-                            #{nome}
-        |]
+import Handler.Auxiliar
+import Database.Persist.Postgresql
 
 postFazerRequisicaoR :: UsuarioId -> ServicoId -> Handler Html
 postFazerRequisicaoR uid sid = do
     -- runDB $ insert $ Pedido "" uid sid
-	redirect RequisicoesR
+    redirect RequisicoesR
 
 getRequisicaoR :: PedidoId -> Handler Html
 getRequisicaoR id = do
     pedido <- runDB $ get404 id
+    logged <- lookupSession "_ID"
     defaultLayout $ do
         toWidgetHead $(juliusFile "templates/home.julius")
         addScriptRemote "https://kit.fontawesome.com/2ab210d476.js"
@@ -67,7 +57,21 @@ getRequisicaoR id = do
 
 getRequisicoesR :: Handler Html
 getRequisicoesR = do
-    pedidos <- runDB $ selectList [] [Asc PedidoData]
+    logged <- lookupSession "_ID"
+    let sql = "SELECT ??,??,??,?? FROM pedido \
+      \ INNER JOIN usuario ON pedido.uid = usuario.id \
+      \ INNER JOIN servico ON pedido.sid = servico.id \
+      \ INNER JOIN situacao ON pedido.stid = situacao.id "
+    pedidos <- do
+        case logged of
+            Just email -> do
+                if (email /= "admin") then do
+                    let sql2 = sql ++ " WHERE usuario.email = ?"
+                    runDB $ rawSql sql2 [toPersistValue logged] :: Handler [(Entity Pedido,Entity Servico,Entity Usuario,Entity Situacao)]
+                else
+                    runDB $ rawSql sql [] :: Handler [(Entity Pedido,Entity Servico,Entity Usuario,Entity Situacao)]  
+            _ -> do
+                runDB $ rawSql sql [] :: Handler [(Entity Pedido,Entity Servico,Entity Usuario,Entity Situacao)]  
     defaultLayout $ do
         toWidgetHead $(juliusFile "templates/home.julius")
         addScriptRemote "https://kit.fontawesome.com/2ab210d476.js"

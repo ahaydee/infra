@@ -1,0 +1,28 @@
+<main>
+    <div class="container content" style="margin-bottom: 55px">
+        <div class="row" style="padding-left: 15px">
+            $maybe rot <- voltar
+                <div class="col-lg-12" style="margin-top: 30px">
+                    <a href=@{rot}>
+                        Voltar
+
+            <div class="col-lg-12" style="margin-top: 15px">
+                <h3>
+                    #{name}
+
+            $maybe mensa <- msg
+                <div class="col-lg-12">
+                    <p>
+                        ^{mensa}
+
+            <div class="col-lg-12">
+                <form action=@{rota} method=post>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            ^{widget}
+
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <br>
+                                <input type="submit" value=#{btn} class="form-control" >

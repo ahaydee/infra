@@ -21,11 +21,43 @@ data App = App
 
 mkYesodData "App" $(parseRoutesFile "config/routes")
 
--- Facilitar a manipulação de formularios
-type Form a = Html -> MForm Handler (FormResult a, Widget)
-
 instance Yesod App where
     makeLogger = return . appLogger
+    
+    authRoute _ = Just EntrarR
+    
+    isAuthorized HomeR _ = return Authorized
+    isAuthorized EntrarR _ = return Authorized
+    isAuthorized (StaticR _) _ = return Authorized
+    isAuthorized UsuariosR _ = isAdmin
+    isAuthorized UsuarioR _ = isAdmin
+    isAuthorized (ApagarUsuarioR _) _ = isAdmin
+    isAuthorized (ListarUsuarioR _) _ = isAdmin
+    isAuthorized (EditarUsuarioR _) _ = isAdmin
+    isAuthorized CategoriaR _ = isAdmin
+    isAuthorized (EditarCategoriaR _) _ = isAdmin
+    isAuthorized (ApagarCategoriaR _) _ = isAdmin
+    isAuthorized (ServicoR _) _ = isAdmin
+    isAuthorized (ApagarServicoR _ _) _ = isAdmin
+    isAuthorized _ _ = isUsuario
+
+isAdmin :: Handler AuthResult
+isAdmin = do 
+    sess <- lookupSession "_ID"
+    case sess of 
+        Nothing -> return AuthenticationRequired
+        Just "admin" -> return Authorized
+        Just _ -> return $ Unauthorized "USUARIO COMUM"
+
+isUsuario :: Handler AuthResult
+isUsuario = do 
+    sess <- lookupSession "_ID"
+    case sess of 
+        Nothing -> return AuthenticationRequired
+        Just _ -> return Authorized
+
+-- Facilitar a manipulação de formularios
+type Form a = Html -> MForm Handler (FormResult a, Widget)
 
 instance YesodPersist App where
     type YesodPersistBackend App = SqlBackend
