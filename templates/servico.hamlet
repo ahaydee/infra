@@ -3,13 +3,15 @@
         <div class="row" style="margin-top: 45px; padding-left: 15px">
             <div class="col-lg-12">
                 <h2>CATÁLOGO DE SERVIÇOS
-                
+            <div class="col-lg-12" style="margin-top: 15px">
+                <a href=@{CategoriaR cid}>
+                    Voltar
             $maybe mensa <- msg
-                <div class="col-lg-12">
+                <div class="col-lg-12" style="margin-top: 15px">
                     <p>
                         ^{mensa}
 
-            <div class="col-lg-12" style="margin-top: 30px">
+            <div class="col-lg-12" style="margin-top: 15px">
                 <h3>
                     Serviço
                 <br>
@@ -26,7 +28,7 @@
                     <div class="row">
                         $if (email /= "admin")
                             <div class="col-lg-2">
-                                <form method=post action=@{SolicitarR cid sid}>
+                                <form method=get action=@{SolicitarR cid sid}>
                                     <button class="form-control" style=" margin-right: 10px">
                                         Solicitar
                         $if (email == "admin")

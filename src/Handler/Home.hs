@@ -86,7 +86,7 @@ getEntrarR = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")
-        ((formWidget Nothing (EntrarR) "Login" "Entrar" widget msg))
+        ((formWidget Nothing (EntrarR) "Login" "Entrar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 postEntrarR :: Handler Html
@@ -101,8 +101,8 @@ postEntrarR = do
            case usuario of 
                 Nothing -> do 
                     setMessage [shamlet|
-                        <div>
-                            Usuario e/ou Senha nao conferem
+                        <p style="color: #f44336;font-weight: bold;">
+                            Usuário e/ou Senha não conferem
                     |]
                     redirect EntrarR
                 Just (Entity _ usu) -> do 
@@ -111,11 +111,16 @@ postEntrarR = do
                         redirect CatalogoR
                     else do 
                         setMessage [shamlet|
-                            <div>
-                                Usuario e/ou Senha nao conferem
+                            <p style="color: #f44336;font-weight: bold;">
+                                Usuário e/ou Senha não conferem
                         |]
                         redirect EntrarR 
-        _ -> redirect HomeR
+        _ -> do
+            setMessage [shamlet|
+                <p style="color: #f44336;font-weight: bold;">
+                    Usuário e/ou Senha não conferem
+            |]
+            redirect EntrarR 
 
 postSairR :: Handler Html 
 postSairR = do 

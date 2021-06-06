@@ -17,13 +17,9 @@ import Database.Persist.Postgresql
 
 formServico :: CategoriaId -> Maybe Servico -> Form Servico
 formServico cid mc = renderDivs $ Servico 
-    <$> areq (selectField cats) (FieldSettings "Categoria: " Nothing (Just "categoria") Nothing [("class", "form-select")]) (fmap servicoCid mc)
+    <$> pure cid
     <*> areq textField  (FieldSettings "Nome: " Nothing (Just "nome") Nothing [("class", "form-control")]) (fmap servicoNome mc)
     <*> areq textareaField  (FieldSettings "Descrição: " Nothing (Just "descricao") Nothing [("class", "form-control")]) (fmap servicoDescricao mc)
-      where
-        cats = do
-           entidades <- runDB $ selectList [] [Asc CategoriaNome] 
-           optionsPairs $ map (\(Entity cid cat) -> (categoriaNome cat, cid)) entidades
 
 getServicoR :: CategoriaId -> Handler Html
 getServicoR cid = do
@@ -58,7 +54,7 @@ getServicoR cid = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")
-        ((formWidget (Just (ServicosR cid)) (ServicoR cid) "Adicionar Serviço" "Cadastrar" widget msg))
+        ((formWidget (Just (ServicosR cid)) (ServicoR cid) "Adicionar Serviço" "Cadastrar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 postServicoR :: CategoriaId -> Handler Html
@@ -68,7 +64,7 @@ postServicoR cid = do
         FormSuccess servico -> do
             runDB $ insert servico
             setMessage [shamlet|
-                    <div>
+                    <p style="color: #673ab7;font-weight: bold;">
                         Serviço inserido com sucesso
             |]
             redirect $ ServicoR cid
@@ -150,7 +146,7 @@ getEditarServicoR cid sid = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")
-        ((formWidget (Just (ServicosR cid)) (EditarServicoR cid sid) "Editar Servico" "Salvar" widget msg))
+        ((formWidget (Just (ServicosR cid)) (EditarServicoR cid sid) "Editar Serviço" "Salvar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 
@@ -162,24 +158,4 @@ postEditarServicoR cid sid = do
         FormSuccess novoServico -> do 
             runDB $ replace sid novoServico
             redirect $ ServicosR cid
-        _ -> redirect $ ServicosR cid
-
-
-postSolicitarR :: CategoriaId -> ServicoId -> Handler Html
-postSolicitarR cid sid = do
-    _ <- runDB $ get404 sid
-    logged <- lookupSession "_ID"
-    case logged of 
-        Just email -> do
-            usuario <- runDB $ getBy (UniqueEmail email)
-            case usuario of 
-                Nothing -> do 
-                    redirect EntrarR
-                Just (Entity usuId usu) -> do 
-                    runDB $ insert $ Pedido "" usuId sid (toSqlKey 1)
-                    setMessage [shamlet|
-                            <div>
-                                Serviço solicitado com sucesso
-                    |]
-                    redirect (ListarServicoR cid sid)
         _ -> redirect $ ServicosR cid

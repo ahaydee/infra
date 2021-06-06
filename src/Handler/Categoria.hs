@@ -51,7 +51,7 @@ getCategoriaR = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")        
-        ((formWidget (Just CatalogoR) (CategoriaR) "Adicionar Categoria" "Cadastrar" widget msg))
+        ((formWidget (Just CatalogoR) (CategoriaR) "Adicionar Categoria" "Cadastrar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 postCategoriaR :: Handler Html
@@ -61,7 +61,7 @@ postCategoriaR = do
         FormSuccess categoria -> do
             runDB $ insert categoria
             setMessage [shamlet|
-                    <div>
+                    <p style="color: #673ab7;font-weight: bold;">
                         Categoria inserida com sucesso
             |]
             redirect CategoriaR
@@ -179,7 +179,7 @@ getEditarCategoriaR cid = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")
-        ((formWidget (Just CatalogoR) (EditarCategoriaR cid) "Editar Categoria" "Salvar" widget msg))
+        ((formWidget (Just CatalogoR) (EditarCategoriaR cid) "Editar Categoria" "Salvar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 

@@ -57,7 +57,7 @@ getUsuarioR = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")
-        ((formWidget (Just UsuariosR) (UsuarioR) "Adicionar Usuário" "Cadastrar" widget msg))
+        ((formWidget (Just UsuariosR) (UsuarioR) "Adicionar Usuário" "Cadastrar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 postUsuarioR :: Handler Html
@@ -67,7 +67,7 @@ postUsuarioR = do
         FormSuccess usuario -> do
             runDB $ insert usuario
             setMessage [shamlet|
-                    <div>
+                    <p style="color: #673ab7;font-weight: bold;">
                         Usuário inserido com sucesso
             |]
             redirect $ UsuarioR
@@ -190,7 +190,7 @@ getEditarUsuarioR uid = do
         addStylesheet (StaticR js_bootstrap_min_js)
         toWidgetHead $(luciusFile "templates/home.lucius")
         $(whamletFile "templates/menu.hamlet")
-        ((formWidget (Just UsuariosR) (EditarUsuarioR uid) "Editar Usuario" "Salvar" widget msg))
+        ((formWidget (Just UsuariosR) (EditarUsuarioR uid) "Editar Usuário" "Salvar" widget msg ))
         $(whamletFile "templates/footer.hamlet")
 
 

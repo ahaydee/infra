@@ -21,7 +21,8 @@ Usuario
     deriving Show
  
 Pedido
-    data Text
     uid UsuarioId
     sid ServicoId
     stid SituacaoId
+    data Day
+    descricao Textarea
